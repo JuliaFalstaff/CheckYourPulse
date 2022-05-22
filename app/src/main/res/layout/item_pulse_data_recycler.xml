@@ -30,7 +30,7 @@
                 tools:text="12:30" />
 
             <TextView
-                android:id="@+id/pressure"
+                android:id="@+id/pressureHigh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
@@ -50,7 +50,7 @@
                 android:textSize="@dimen/text_size_item" />
 
             <TextView
-                android:id="@+id/pulse"
+                android:id="@+id/pressureLow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
@@ -60,7 +60,7 @@
                 tools:text="83" />
 
             <TextView
-                android:id="@+id/heart"
+                android:id="@+id/heartPulse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
