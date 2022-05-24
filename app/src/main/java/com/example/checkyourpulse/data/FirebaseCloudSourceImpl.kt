@@ -6,34 +6,39 @@ import com.example.checkyourpulse.domain.model.HealthInfo
 import com.example.checkyourpulse.utils.convertToDataModel
 import com.example.checkyourpulse.utils.covertToDocuments
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Deferred
 
 class FirebaseCloudSourceImpl(val dataBase: FirebaseFirestore): IFirebaseCloudSource {
 
-    override fun getData(): List<HealthInfo> {
+    override suspend fun getData(): List<HealthInfo> {
         val healthList = mutableListOf<HealthInfo>()
         dataBase.collection(COLLECTION_NAME)
             .get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     for (document in it.result) {
+
                         healthList.add(convertToDataModel(document.data))
+                        Log.d(TAG, "add ${document.data}")
+                        Log.d(TAG, "add $healthList")
                     }
                 }
             }
             .addOnFailureListener {
-                Log.w(TAG, "Error getting item", it)
+                Log.d(TAG, "Error getting item", it)
             }
         return healthList
+
     }
 
-    override fun saveData(data: HealthInfo) {
+    override suspend fun saveData(data: HealthInfo) {
         dataBase.collection(COLLECTION_NAME)
             .add(covertToDocuments(data))
             .addOnSuccessListener {documentReference ->
                 Log.d(TAG, "Health Info added with ID: ${documentReference.id}")
             }
             .addOnFailureListener { e ->
-                Log.w(TAG, "Error saving item", e)
+                Log.d(TAG, "Error saving item", e)
             }
     }
 

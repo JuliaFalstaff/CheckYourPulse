@@ -9,13 +9,14 @@
         android:id="@+id/pulseInfoRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_pulse_data_recycler"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/searchFab"
+        android:id="@+id/addFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_medium"
