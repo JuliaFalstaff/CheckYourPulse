@@ -10,7 +10,7 @@ import com.example.checkyourpulse.utils.convertDateInMillis
 import com.example.checkyourpulse.utils.convertToString
 
 
-class HealthAdapter(var list: List<HealthInfo>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setData(newList: List<HealthInfo>) {
         list = newList
@@ -21,31 +21,38 @@ class HealthAdapter(var list: List<HealthInfo>): RecyclerView.Adapter<RecyclerVi
         return when (viewType) {
             DATE_VIEW_TYPE -> {
                 val binding: ItemPulseDateRecyclerBinding = ItemPulseDateRecyclerBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false)
+                    LayoutInflater.from(parent.context), parent, false
+                )
                 DateViewHolder(binding)
             }
             HEALTH_DATA_INFO_TYPE -> {
                 val binding: ItemPulseDataRecyclerBinding = ItemPulseDataRecyclerBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false)
+                    LayoutInflater.from(parent.context), parent, false
+                )
                 DataInfoViewHolder(binding)
             }
-            else -> throw RuntimeException(VIEWHOLDER_TYPE_ERROR)
+            else -> {
+                val binding: ItemPulseDataRecyclerBinding = ItemPulseDataRecyclerBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+                DataInfoViewHolder(binding)
+            }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder) {
+        when (holder) {
             is DateViewHolder -> holder.bind(list[position])
             is DataInfoViewHolder -> holder.bind(list[position])
         }
     }
 
-    override fun getItemCount(): Int  = list.size
+    override fun getItemCount(): Int = list.size
 
     override fun getItemViewType(position: Int): Int {
-        if (position == 0) return DATE_VIEW_TYPE else  HEALTH_DATA_INFO_TYPE
+        if (position == 0) return DATE_VIEW_TYPE else HEALTH_DATA_INFO_TYPE
         val currentDate = convertDateInMillis(list[position].date)
-        val lastDate = convertDateInMillis(list[position-1].date)
+        val lastDate = convertDateInMillis(list[position - 1].date)
 
 //        val currentDate = LocalDate.parse(list[position].time, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss", Locale.getDefault()))
 //        val lastDate = LocalDate.parse(list[position - 1].time, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss", Locale.getDefault()))
@@ -57,14 +64,14 @@ class HealthAdapter(var list: List<HealthInfo>): RecyclerView.Adapter<RecyclerVi
         }
     }
 
-    inner class DateViewHolder(private val binding: ItemPulseDateRecyclerBinding):
+    inner class DateViewHolder(private val binding: ItemPulseDateRecyclerBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(health: HealthInfo) {
-                binding.dateHeaderView.text = health.date.convertToString()
-            }
+        fun bind(health: HealthInfo) {
+            binding.dateHeaderView.text = health.date.convertToString()
         }
+    }
 
-    inner class DataInfoViewHolder(private val binding: ItemPulseDataRecyclerBinding):
+    inner class DataInfoViewHolder(private val binding: ItemPulseDataRecyclerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(health: HealthInfo) {
             binding.timeOfDay.text = health.time

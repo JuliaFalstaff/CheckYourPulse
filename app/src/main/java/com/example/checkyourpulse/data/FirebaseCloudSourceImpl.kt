@@ -7,6 +7,7 @@ import com.example.checkyourpulse.utils.convertToDataModel
 import com.example.checkyourpulse.utils.covertToDocuments
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.tasks.await
 
 class FirebaseCloudSourceImpl(val dataBase: FirebaseFirestore): IFirebaseCloudSource {
 
@@ -17,18 +18,15 @@ class FirebaseCloudSourceImpl(val dataBase: FirebaseFirestore): IFirebaseCloudSo
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     for (document in it.result) {
-
                         healthList.add(convertToDataModel(document.data))
-                        Log.d(TAG, "add ${document.data}")
-                        Log.d(TAG, "add $healthList")
+                        Log.d(TAG, "isSuccessful add $healthList")
                     }
                 }
             }
             .addOnFailureListener {
                 Log.d(TAG, "Error getting item", it)
-            }
+            }.await()
         return healthList
-
     }
 
     override suspend fun saveData(data: HealthInfo) {
