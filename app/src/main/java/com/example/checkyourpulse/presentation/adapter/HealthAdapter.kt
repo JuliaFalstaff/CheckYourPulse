@@ -1,15 +1,16 @@
 package com.example.checkyourpulse.presentation.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.checkyourpulse.R
 import com.example.checkyourpulse.databinding.ItemPulseDataRecyclerBinding
 import com.example.checkyourpulse.databinding.ItemPulseNoDataRecyclerBinding
 import com.example.checkyourpulse.domain.model.HealthInfo
+import com.example.checkyourpulse.utils.convertToDayMonthString
 import com.example.checkyourpulse.utils.convertToDayString
 import com.example.checkyourpulse.utils.convertToHoursMinutes
-import com.example.checkyourpulse.utils.convertToString
 
 class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -64,17 +65,45 @@ class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerV
             binding.pressureHigh.text = health.pressureHigh.toString()
             binding.pressureLow.text = health.pressureLow.toString()
             binding.heartPulse.text = health.pulse.toString()
+            setColorBackground(health.pressureHigh, itemView)
         }
     }
 
     inner class DataInfoViewHolder(private val binding: ItemPulseDataRecyclerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(health: HealthInfo) {
-            binding.dateHeaderView.text = health.date.convertToDayString()
+            binding.dateHeaderView.text = health.date.convertToDayMonthString()
             binding.timeOfDay.text = health.date.convertToHoursMinutes()
             binding.pressureHigh.text = health.pressureHigh.toString()
             binding.pressureLow.text = health.pressureLow.toString()
             binding.heartPulse.text = health.pulse.toString()
+            setColorBackground(health.pressureHigh, itemView)
+        }
+    }
+
+    fun setColorBackground(pressure: Int, itemView: View) {
+        when {
+            pressure > 160 -> {
+                itemView.setBackgroundResource(R.drawable.gradient_background_red)
+            }
+            pressure < 100 -> {
+                itemView.setBackgroundResource(R.drawable.gradient_background_red)
+            }
+            pressure in 120..139 -> {
+                itemView.setBackgroundResource(R.drawable.gradient_background_green)
+            }
+            pressure in 110..120 -> {
+                itemView.setBackgroundResource(R.drawable.gradient_background_green)
+            }
+            pressure in 139..160 -> {
+                itemView.setBackgroundResource(R.drawable.gradient_background_yellow)
+            }
+            pressure in 100..109 -> {
+                itemView.setBackgroundResource(R.drawable.gradient_background_yellow)
+            }
+            else -> {
+                itemView.setBackgroundResource(R.drawable.gradient_background_yellow)
+            }
         }
     }
 

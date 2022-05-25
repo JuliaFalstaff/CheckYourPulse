@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.DialogFragment
+import com.example.checkyourpulse.R
 import com.example.checkyourpulse.databinding.AddDialogFragmentBinding
 import com.example.checkyourpulse.domain.model.HealthInfo
 import com.example.checkyourpulse.utils.getCurrentDate
@@ -16,6 +18,12 @@ class AddDialogFragment : DialogFragment() {
     private var _binding: AddDialogFragmentBinding? = null
     private val binding get() = _binding!!
     private var onSaveDialogListener: IOnSaveDialogListener? = null
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(Constraints.LayoutParams.MATCH_PARENT, Constraints.LayoutParams.WRAP_CONTENT)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
