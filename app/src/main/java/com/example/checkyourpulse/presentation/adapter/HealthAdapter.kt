@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.checkyourpulse.databinding.ItemPulseDataRecyclerBinding
-import com.example.checkyourpulse.databinding.ItemPulseDateRecyclerBinding
 import com.example.checkyourpulse.databinding.ItemPulseNoDataRecyclerBinding
 import com.example.checkyourpulse.domain.model.HealthInfo
-import com.example.checkyourpulse.utils.convertDateInMillis
-import com.example.checkyourpulse.utils.convertToDDMMYYYOnly
 import com.example.checkyourpulse.utils.convertToDayString
+import com.example.checkyourpulse.utils.convertToHoursMinutes
 import com.example.checkyourpulse.utils.convertToString
-import java.lang.RuntimeException
-
 
 class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -25,9 +21,10 @@ class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerV
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             HEALTH_NO_DATE_INFO_TYPE -> {
-                val binding: ItemPulseNoDataRecyclerBinding = ItemPulseNoDataRecyclerBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
-                )
+                val binding: ItemPulseNoDataRecyclerBinding =
+                    ItemPulseNoDataRecyclerBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
                 NoDateViewHolder(binding)
             }
             HEALTH_DATA_INFO_TYPE -> {
@@ -52,32 +49,18 @@ class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerV
     override fun getItemViewType(position: Int): Int {
         if (position == 0) return HEALTH_DATA_INFO_TYPE
         val currentPosition = list[position].date.convertToDayString()
-
-        val prevPosition = list[position-1].date.convertToDayString()
-        Log.d("TAG ADAPTER", "current: $currentPosition  prev: $prevPosition")
+        val prevPosition = list[position - 1].date.convertToDayString()
         return if (currentPosition > prevPosition) {
             HEALTH_DATA_INFO_TYPE
         } else {
             HEALTH_NO_DATE_INFO_TYPE
         }
-
-//        val currentDate = convertDateInMillis(list[position].date)
-//        val lastDate = convertDateInMillis(list[position - 1].date)
-//
-////        val currentDate = LocalDate.parse(list[position].time, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss", Locale.getDefault()))
-////        val lastDate = LocalDate.parse(list[position - 1].time, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss", Locale.getDefault()))
-////        val currentDate = LocalDate.parse(list[position].time)
-////        val lastDate = LocalDate.parse(list[position - 1].time)
-//        return when (currentDate == lastDate) {
-//            true -> HEALTH_DATA_INFO_TYPE
-//            false -> DATE_VIEW_TYPE
-//        }
     }
 
     inner class NoDateViewHolder(private val binding: ItemPulseNoDataRecyclerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(health: HealthInfo) {
-            binding.timeOfDay.text = health.time
+            binding.timeOfDay.text = health.date.convertToHoursMinutes()
             binding.pressureHigh.text = health.pressureHigh.toString()
             binding.pressureLow.text = health.pressureLow.toString()
             binding.heartPulse.text = health.pulse.toString()
@@ -87,8 +70,8 @@ class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerV
     inner class DataInfoViewHolder(private val binding: ItemPulseDataRecyclerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(health: HealthInfo) {
-            binding.dateHeaderView.text = health.date.convertToString()
-            binding.timeOfDay.text = health.time
+            binding.dateHeaderView.text = health.date.convertToDayString()
+            binding.timeOfDay.text = health.date.convertToHoursMinutes()
             binding.pressureHigh.text = health.pressureHigh.toString()
             binding.pressureLow.text = health.pressureLow.toString()
             binding.heartPulse.text = health.pulse.toString()
@@ -100,5 +83,4 @@ class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerV
         private const val HEALTH_DATA_INFO_TYPE = 1
         private const val VIEWHOLDER_TYPE_ERROR = "Unknown type of viewholder"
     }
-
 }

@@ -47,6 +47,11 @@ fun Date.convertToDayString(): String {
     return formatter.format(this)
 }
 
+fun Date.convertToHoursMinutes(): String {
+    val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return formatter.format(this)
+}
+
 fun getCurrentDate(): Date {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
@@ -60,7 +65,7 @@ fun getCurrentDate(): Date {
 
 fun getCurrentTime(): String {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val nowTime = LocalDate.now()
+        val nowTime = LocalDateTime.now()
         val current = nowTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
         current.dropLast(17)
     } else {
