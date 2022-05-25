@@ -57,11 +57,13 @@ class MainFragment : Fragment(), KoinScopeComponent {
         when (appState) {
             is AppState.Success<*> -> {
                 val listData = appState.dataHealth as? List<HealthInfo>
-                listData?.let {
-                    binding.pulseInfoRecyclerView.adapter = adapter
-                    adapter = HealthAdapter(it)
-                    adapter?.setData(it)
-                    Log.d("TAG Fragment Success", "list: $listData")
+                if(listData is List<HealthInfo>) {
+                    listData.let {
+                        adapter = HealthAdapter(it)
+                        binding.pulseInfoRecyclerView.adapter = adapter
+                        adapter?.setData(it)
+                        Log.d("TAG Fragment Success", "list: $listData")
+                    }
                 }
             }
             is AppState.Loading -> {
@@ -75,7 +77,7 @@ class MainFragment : Fragment(), KoinScopeComponent {
                 Toast.makeText(
                     requireContext(),
                     "Error: ${appState.error.message}",
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_LONG
                 ).show()
                 Log.d("TAG Fragment Error", "Error: ${appState.error.message}")
             }

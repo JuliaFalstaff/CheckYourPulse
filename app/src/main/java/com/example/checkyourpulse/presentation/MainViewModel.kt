@@ -41,4 +41,9 @@ class MainViewModel(
     private fun handleError(error: Throwable) {
         liveDataToObserve.postValue(AppState.Error(error))
     }
+
+    override fun onCleared() {
+        liveDataToObserve.postValue(AppState.Success(null))
+        super.onCleared()
+    }
 }

@@ -3,9 +3,11 @@ package com.example.checkyourpulse.data
 
 import android.util.Log
 import com.example.checkyourpulse.domain.model.HealthInfo
+import com.example.checkyourpulse.utils.DATE
 import com.example.checkyourpulse.utils.convertToDataModel
 import com.example.checkyourpulse.utils.covertToDocuments
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.tasks.await
 
@@ -13,7 +15,7 @@ class FirebaseCloudSourceImpl(val dataBase: FirebaseFirestore): IFirebaseCloudSo
 
     override suspend fun getData(): List<HealthInfo> {
         val healthList = mutableListOf<HealthInfo>()
-        dataBase.collection(COLLECTION_NAME)
+        dataBase.collection(COLLECTION_NAME).orderBy(DATE, Query.Direction.ASCENDING)
             .get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {

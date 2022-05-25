@@ -10,6 +10,12 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+const val DATE = "date"
+const val TIME = "time"
+const val PRESSURE_LOW = "pressureLow"
+const val PRESSURE_HIGH = "pressureHigh"
+const val PULSE = "pulse"
+
 
 fun convertToDataModel(docData: MutableMap<String, Any>): HealthInfo {
     return HealthInfo(
@@ -31,32 +37,14 @@ fun covertToDocuments(healthInfo: HealthInfo): Map<String, Any> {
     return map
 }
 
-//fun getCurrentDate(): String {
-//    val nowTime = LocalDateTime.now()
-//    return   nowTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
-//}
-
-//fun getCurrentDate(): String {
-//    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//        val nowTime = LocalDateTime.now()
-//        nowTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
-//    } else {
-//        Calendar.getInstance().time.convertToString()
-//    }
-//}
-
 fun Date.convertToString(): String {
     val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
     return formatter.format(this)
 }
 
-fun convertDateInMillis(date: Date): Date {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
-        formatter.parse(date.toString())
-    } else {
-        date
-    }
+fun Date.convertToDayString(): String {
+    val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    return formatter.format(this)
 }
 
 fun getCurrentDate(): Date {
@@ -70,14 +58,6 @@ fun getCurrentDate(): Date {
     }
 }
 
-
-//fun getCurrentTime(): String {
-//    val nowTime = LocalDateTime.now()
-//    return nowTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-//}
-
-//fun getCurrentTime(): Date = Calendar.getInstance().time
-
 fun getCurrentTime(): String {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val nowTime = LocalDate.now()
@@ -87,11 +67,3 @@ fun getCurrentTime(): String {
         Calendar.getInstance().time.convertToString().dropLast(17)
     }
 }
-
-
-
-const val DATE = "date"
-const val TIME = "time"
-const val PRESSURE_LOW = "pressureLow"
-const val PRESSURE_HIGH = "pressureHigh"
-const val PULSE = "pulse"
