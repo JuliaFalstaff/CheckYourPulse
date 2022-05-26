@@ -64,15 +64,13 @@ class MainFragment : Fragment(), KoinScopeComponent {
                         Log.d("TAG Fragment Success", "list: $listData")
                     }
                 }
+                binding.progressBar.visibility = View.INVISIBLE
             }
             is AppState.Loading -> {
-                Toast.makeText(
-                        requireContext(),
-                        "Loading",
-                        Toast.LENGTH_SHORT
-                ).show()
+                binding.progressBar.visibility = View.VISIBLE
             }
             is AppState.Error -> {
+                binding.progressBar.visibility = View.INVISIBLE
                 Toast.makeText(
                         requireContext(),
                         "Error: ${appState.error.message}",
@@ -80,7 +78,6 @@ class MainFragment : Fragment(), KoinScopeComponent {
                 ).show()
                 Log.d("TAG Fragment Error", "Error: ${appState.error.message}")
             }
-
         }
     }
 
