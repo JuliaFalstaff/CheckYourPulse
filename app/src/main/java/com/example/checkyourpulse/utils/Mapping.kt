@@ -56,9 +56,9 @@ fun Date.convertToHoursMinutes(): String {
 
 fun getCurrentDate(): Date {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        val formatter = SimpleDateFormat("dd-LL-yyyy HH:mm:ss", Locale.getDefault())
+        val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
         val nowTime = LocalDateTime.now()
-        formatter.parse(nowTime.format(DateTimeFormatter.ofPattern("dd-LL-yyyy HH:mm:ss")))
+        formatter.parse(nowTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")))
 
     } else {
         Calendar.getInstance().time
@@ -68,7 +68,7 @@ fun getCurrentDate(): Date {
 fun getCurrentTime(): String {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val nowTime = LocalDateTime.now()
-        val current = nowTime.format(DateTimeFormatter.ofPattern("dd-LL-yyyy HH:mm:ss"))
+        val current = nowTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))
         current.dropLast(17)
     } else {
         Calendar.getInstance().time.convertToString().dropLast(17)
