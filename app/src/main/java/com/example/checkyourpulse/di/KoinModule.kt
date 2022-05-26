@@ -14,7 +14,6 @@ val application = module {
     single<FirebaseFirestore> { FirebaseFirestore.getInstance() }
     single<IFirebaseCloudSource> { FirebaseCloudSourceImpl(dataBase = get()) }
     single<IRepository> { RepositoryImpl(cloudSource = get()) }
-
 }
 
 val mainScreen = module {

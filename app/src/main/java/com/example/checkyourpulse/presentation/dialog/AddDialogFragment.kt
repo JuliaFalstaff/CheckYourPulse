@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.Constraints
 import androidx.fragment.app.DialogFragment
-import com.example.checkyourpulse.R
 import com.example.checkyourpulse.databinding.AddDialogFragmentBinding
 import com.example.checkyourpulse.domain.model.HealthInfo
 import com.example.checkyourpulse.utils.getCurrentDate
@@ -25,9 +24,9 @@ class AddDialogFragment : DialogFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View? {
         _binding = AddDialogFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -38,15 +37,15 @@ class AddDialogFragment : DialogFragment() {
         binding.saveButton.setOnClickListener {
             val current = Calendar.getInstance().time
             onSaveDialogListener?.onSave(
-                getCurrentDate()?.let { date ->
-                    HealthInfo(
-                        date = date,
-                        time = getCurrentTime(),
-                        pressureLow = binding.pressureLowEditText.text.toString().toInt(),
-                        pressureHigh = binding.pressureHighEditText.text.toString().toInt(),
-                        pulse = binding.pulseEditText.text.toString().toInt()
-                    )
-                }
+                    getCurrentDate()?.let { date ->
+                        HealthInfo(
+                                date = date,
+                                time = getCurrentTime(),
+                                pressureLow = binding.pressureLowEditText.text.toString().toInt(),
+                                pressureHigh = binding.pressureHighEditText.text.toString().toInt(),
+                                pulse = binding.pulseEditText.text.toString().toInt()
+                        )
+                    }
             )
             dismiss()
         }

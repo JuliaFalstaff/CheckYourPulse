@@ -9,19 +9,20 @@ import com.example.checkyourpulse.domain.repository.IRepository
 import kotlinx.coroutines.*
 
 class MainViewModel(
-    private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
-    val repo: IRepository): ViewModel() {
+        private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
+        val repo: IRepository,
+) : ViewModel() {
 
     fun getLiveData(): LiveData<AppState> = liveDataToObserve
 
     private var job: Job? = null
 
     private val viewModelCoroutineScope = CoroutineScope(
-        Dispatchers.IO
-                + SupervisorJob()
-                + CoroutineExceptionHandler { _, throwable ->
-            handleError(throwable)
-        })
+            Dispatchers.IO
+                    + SupervisorJob()
+                    + CoroutineExceptionHandler { _, throwable ->
+                handleError(throwable)
+            })
 
     fun loadData() {
         liveDataToObserve.postValue(AppState.Loading)

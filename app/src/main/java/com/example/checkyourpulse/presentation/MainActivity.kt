@@ -1,7 +1,7 @@
 package com.example.checkyourpulse.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.checkyourpulse.R
 import com.example.checkyourpulse.databinding.ActivityMainBinding
 
@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
-                .commit()
+                    .replace(R.id.container, MainFragment.newInstance())
+                    .commit()
         }
     }
 

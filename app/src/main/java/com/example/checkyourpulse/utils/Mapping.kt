@@ -16,11 +16,11 @@ const val PULSE = "pulse"
 
 fun convertToDataModel(docData: MutableMap<String, Any>): HealthInfo {
     return HealthInfo(
-        date = (docData[DATE] as Timestamp).toDate(),
-        time = docData[TIME] as String,
-        pressureLow = (docData[PRESSURE_LOW] as Long).toInt(),
-        pressureHigh = (docData[PRESSURE_HIGH] as Long).toInt(),
-        pulse = (docData[PULSE] as Long).toInt()
+            date = (docData[DATE] as Timestamp).toDate(),
+            time = docData[TIME] as String,
+            pressureLow = (docData[PRESSURE_LOW] as Long).toInt(),
+            pressureHigh = (docData[PRESSURE_HIGH] as Long).toInt(),
+            pulse = (docData[PULSE] as Long).toInt()
     )
 }
 

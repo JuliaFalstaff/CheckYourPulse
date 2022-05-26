@@ -23,14 +23,14 @@ class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerV
         return when (viewType) {
             HEALTH_NO_DATE_INFO_TYPE -> {
                 val binding: ItemPulseNoDataRecyclerBinding =
-                    ItemPulseNoDataRecyclerBinding.inflate(
-                        LayoutInflater.from(parent.context), parent, false
-                    )
+                        ItemPulseNoDataRecyclerBinding.inflate(
+                                LayoutInflater.from(parent.context), parent, false
+                        )
                 NoDateViewHolder(binding)
             }
             HEALTH_DATA_INFO_TYPE -> {
                 val binding: ItemPulseDataRecyclerBinding = ItemPulseDataRecyclerBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
+                        LayoutInflater.from(parent.context), parent, false
                 )
                 DataInfoViewHolder(binding)
             }
@@ -59,7 +59,7 @@ class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerV
     }
 
     inner class NoDateViewHolder(private val binding: ItemPulseNoDataRecyclerBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+            RecyclerView.ViewHolder(binding.root) {
         fun bind(health: HealthInfo) {
             binding.timeOfDay.text = health.date.convertToHoursMinutes()
             binding.pressureHigh.text = health.pressureHigh.toString()
@@ -70,7 +70,7 @@ class HealthAdapter(var list: List<HealthInfo>) : RecyclerView.Adapter<RecyclerV
     }
 
     inner class DataInfoViewHolder(private val binding: ItemPulseDataRecyclerBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+            RecyclerView.ViewHolder(binding.root) {
         fun bind(health: HealthInfo) {
             binding.dateHeaderView.text = health.date.convertToDayMonthString()
             binding.timeOfDay.text = health.date.convertToHoursMinutes()

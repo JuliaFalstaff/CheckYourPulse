@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.example.checkyourpulse.databinding.FragmentMainBinding
 import com.example.checkyourpulse.domain.AppState
 import com.example.checkyourpulse.domain.model.HealthInfo
@@ -28,9 +27,9 @@ class MainFragment : Fragment(), KoinScopeComponent {
     private var adapter: HealthAdapter? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
@@ -57,7 +56,7 @@ class MainFragment : Fragment(), KoinScopeComponent {
         when (appState) {
             is AppState.Success<*> -> {
                 val listData = appState.dataHealth as? List<HealthInfo>
-                if(listData is List<HealthInfo>) {
+                if (listData is List<HealthInfo>) {
                     listData.let {
                         adapter = HealthAdapter(it)
                         binding.pulseInfoRecyclerView.adapter = adapter
@@ -68,16 +67,16 @@ class MainFragment : Fragment(), KoinScopeComponent {
             }
             is AppState.Loading -> {
                 Toast.makeText(
-                    requireContext(),
-                    "Loading",
-                    Toast.LENGTH_SHORT
+                        requireContext(),
+                        "Loading",
+                        Toast.LENGTH_SHORT
                 ).show()
             }
             is AppState.Error -> {
                 Toast.makeText(
-                    requireContext(),
-                    "Error: ${appState.error.message}",
-                    Toast.LENGTH_LONG
+                        requireContext(),
+                        "Error: ${appState.error.message}",
+                        Toast.LENGTH_LONG
                 ).show()
                 Log.d("TAG Fragment Error", "Error: ${appState.error.message}")
             }
@@ -85,6 +84,10 @@ class MainFragment : Fragment(), KoinScopeComponent {
         }
     }
 
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
 
     companion object {
         fun newInstance() = MainFragment()

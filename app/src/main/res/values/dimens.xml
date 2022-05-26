@@ -16,9 +16,6 @@
     <dimen name="margin_xx_large">40dp</dimen>
     <dimen name="margin_xxx_large">45dp</dimen>
 
-    //Paddings
-    <dimen name="padding_bottom_sheet">0dp</dimen>
-
     //Text size
     <dimen name="text_size_tip">10sp</dimen>
     <dimen name="text_size_standard">17sp</dimen>
