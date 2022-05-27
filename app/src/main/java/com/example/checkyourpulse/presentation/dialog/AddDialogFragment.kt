@@ -40,7 +40,6 @@ class AddDialogFragment : DialogFragment() {
                     getCurrentDate()?.let { date ->
                         HealthInfo(
                                 date = date,
-                                time = getCurrentTime(),
                                 pressureLow = binding.pressureLowEditText.text.toString().toInt(),
                                 pressureHigh = binding.pressureHighEditText.text.toString().toInt(),
                                 pulse = binding.pulseEditText.text.toString().toInt()
